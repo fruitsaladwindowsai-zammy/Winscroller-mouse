@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07090e"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="596" height="316" rx="16" fill="url(#bg)" stroke="#1e293b" stroke-width="2"/>
+  <text x="24" y="34" font-family="'Segoe UI',sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Zero-Overhead DirectComposition Flip-Model Pipeline</text>
+
+  <g font-family="'Fira Code',Consolas,monospace" font-size="11.5">
+    <rect x="24" y="58" width="256" height="106" rx="10" fill="#0b1120" stroke="#00f5d4" stroke-opacity="0.55"/>
+    <text x="38" y="80" fill="#00f5d4" font-weight="700">winscroller-mouse-core</text>
+    <text x="38" y="100" fill="#cbd5e1">• MotionState + Shake Detector</text>
+    <text x="38" y="118" fill="#cbd5e1">• Catmull-Rom Band + 6 Trails</text>
+    <text x="38" y="136" fill="#cbd5e1">• 6 Halos + 8 Color Modes</text>
+    <text x="38" y="154" fill="#cbd5e1">• SVG Cursor Forge + CUR/ANI</text>
+
+    <rect x="320" y="58" width="256" height="106" rx="10" fill="#0b1120" stroke="#a855f7" stroke-opacity="0.55"/>
+    <text x="334" y="80" fill="#d8b4fe" font-weight="700">winscroller-mouse (Win32)</text>
+    <text x="334" y="100" fill="#cbd5e1">• Shared D3D11 + D2D1 Device</text>
+    <text x="334" y="118" fill="#cbd5e1">• DirectComposition Premult Alpha</text>
+    <text x="334" y="136" fill="#cbd5e1">• WS_EX_NOREDIRECTIONBITMAP</text>
+    <text x="334" y="154" fill="#cbd5e1">• Named-Pipe IPC + Tray + UI</text>
+
+    <path d="M 282 110 H 316" stroke="#00f5d4" stroke-width="2"/>
+    <polygon points="318,110 310,105 310,115" fill="#00f5d4"/>
+
+    <!-- Bottom telemetry bar -->
+    <rect x="24" y="190" width="552" height="104" rx="10" fill="#0b1120" stroke="#10b981" stroke-opacity="0.45"/>
+    <text x="40" y="216" fill="#6ee7b7" font-weight="700">Resource Budget &amp; Idle Optimization</text>
+    <text x="40" y="240" fill="#cbd5e1">Active Memory:  ~9.7 MB Private Bytes (Single 1.76 MB static EXE)</text>
+    <text x="40" y="260" fill="#cbd5e1">Idle Behavior:  0% GPU / &lt;0.1% CPU + IDXGIDevice3::Trim() after 4s</text>
+    <text x="40" y="280" fill="#cbd5e1">Fullscreen:     Auto-suppressed over D3D/exclusive games &amp; videos</text>
+  </g>
+</svg>

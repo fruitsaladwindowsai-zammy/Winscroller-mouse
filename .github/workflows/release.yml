@@ -1,0 +1,98 @@
+name: Release Build & Auto-Publish EXE
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run workspace tests
+        run: cargo test --workspace
+
+      - name: Build statically linked release binary
+        run: cargo build --release -p winscroller-mouse
+
+      - name: Package release assets & SHA256 checksums
+        shell: pwsh
+        run: |
+          Copy-Item target\release\winscroller-mouse.exe .\winscroller-mouse.exe -Force
+
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item target\release\winscroller-mouse.exe dist\
+          Copy-Item winscroller-mouse.example.json dist\
+          Copy-Item README.md dist\
+          Copy-Item USAGE.md dist\
+          Copy-Item CONFIGURATION.md dist\
+          Copy-Item LICENSE dist\
+          Compress-Archive -Path dist\* -DestinationPath winscroller-mouse-x86_64-pc-windows-msvc.zip -Force
+
+          $exeHash = (Get-FileHash .\winscroller-mouse.exe -Algorithm SHA256).Hash.ToLower()
+          $zipHash = (Get-FileHash .\winscroller-mouse-x86_64-pc-windows-msvc.zip -Algorithm SHA256).Hash.ToLower()
+          @(
+            "$exeHash  winscroller-mouse.exe"
+            "$zipHash  winscroller-mouse-x86_64-pc-windows-msvc.zip"
+          ) | Set-Content -Path SHA256SUMS.txt -Encoding ASCII
+
+      - name: Update rolling `latest` tag on main push
+        if: startsWith(github.ref, 'refs/heads/')
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -f latest HEAD
+          git push origin refs/tags/latest --force
+
+      - name: Publish rolling `latest` Release (on push to main)
+        if: startsWith(github.ref, 'refs/heads/')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Winscroller Mouse — Latest Build
+          body: |
+            Automated build published directly from commit `${{ github.sha }}` on `main`.
+
+            ### Quick Start (Zero Build Tools Required)
+            1. Download **`winscroller-mouse.exe`** below (or the full `.zip` bundle).
+            2. Double-click **`winscroller-mouse.exe`** — it starts silently in the system tray with zero external runtime dependencies (`+crt-static`).
+            3. Right-click the tray icon (or run `winscroller-mouse.exe settings`) to open the 8-tab live preview Settings Panel.
+          files: |
+            winscroller-mouse.exe
+            winscroller-mouse-x86_64-pc-windows-msvc.zip
+            SHA256SUMS.txt
+          draft: false
+          prerelease: false
+          make_latest: true
+
+      - name: Publish versioned GitHub Release (on v* tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: RELEASE_NOTES.md
+          files: |
+            winscroller-mouse.exe
+            winscroller-mouse-x86_64-pc-windows-msvc.zip
+            SHA256SUMS.txt
+          draft: false
+          prerelease: false
+          make_latest: true

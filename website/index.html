@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Winscroller Mouse — Custom Cursor Forge &amp; GPU Pointer Effects for Windows</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav-row">
+      <a class="brand" href="#">
+        <img src="assets/logo.svg" alt="Winscroller Mouse logo" width="32" height="32" />
+        <span>Winscroller <strong>Mouse</strong></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#playground">Playground</a>
+        <a href="#features">Features</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#install">Download</a>
+        <a href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="badge-row">
+        <span class="pill cyan">Windows 10 / 11</span>
+        <span class="pill violet">Pure Rust Edition 2024</span>
+        <span class="pill rust">DirectComposition + D2D1</span>
+        <span class="pill green">~9.7 MB RAM · 1.8 MB EXE</span>
+      </div>
+      <h1>Design Your Own Cursor.<br /><span class="grad">Give It Live GPU Effects.</span></h1>
+      <p class="subtitle">
+        A faithful, hardware-accelerated Rust clone of <strong>omarchy-plume</strong> for Windows —
+        combining a <strong>14 × 30 × 22 × 18 procedural Cursor Forge</strong> with silky-smooth
+        Catmull-Rom pointer trails, halos, 8 color modes, and Shake-to-Find.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/latest">Download winscroller-mouse.exe</a>
+        <a class="btn secondary" href="#playground">Try Interactive Preview</a>
+      </div>
+    </section>
+
+    <section id="playground" class="container section">
+      <div class="card playground-card">
+        <div class="playground-header">
+          <div>
+            <h2>Interactive Trail &amp; Halo Preview</h2>
+            <p class="muted">Move your cursor inside the canvas (or shake rapidly for Shake-to-Find!)</p>
+          </div>
+          <div class="controls">
+            <select id="trailSelect" aria-label="Trail style">
+              <option value="comet" selected>Trail: Comet</option>
+              <option value="ribbon">Trail: Ribbon</option>
+              <option value="beads">Trail: Beads</option>
+              <option value="sparks">Trail: Sparks</option>
+              <option value="echoes">Trail: Echoes</option>
+              <option value="bubbles">Trail: Bubbles</option>
+              <option value="none">Trail: None</option>
+            </select>
+            <select id="haloSelect" aria-label="Halo style">
+              <option value="glow" selected>Halo: Glow</option>
+              <option value="ring">Halo: Ring</option>
+              <option value="pulse">Halo: Pulse</option>
+              <option value="target">Halo: Target</option>
+              <option value="crosshair">Halo: Crosshair</option>
+              <option value="none">Halo: None</option>
+            </select>
+            <select id="colorSelect" aria-label="Color mode">
+              <option value="theme" selected>Color: Cyan Theme</option>
+              <option value="rainbow">Color: Rainbow</option>
+              <option value="gradient">Color: Cyan -> Violet</option>
+              <option value="speed">Color: Speed</option>
+            </select>
+            <button id="findBtn" class="btn small">Test Find</button>
+          </div>
+        </div>
+        <canvas id="demoCanvas" width="1080" height="340"></canvas>
+      </div>
+    </section>
+
+    <section id="features" class="container section">
+      <h2 class="section-title">100% Feature Parity with omarchy-plume</h2>
+      <div class="grid-2">
+        <article class="card">
+          <img src="assets/concept-trails.svg" alt="6 Pointer Trails" />
+          <h3>6 GPU Pointer Trails</h3>
+          <p>Comet, Ribbon, Beads, Sparks, Echoes, and Bubbles — using Catmull-Rom curve smoothing and additive non-overlapping quads for zero seam artifacts.</p>
+        </article>
+        <article class="card">
+          <img src="assets/concept-halos.svg" alt="6 Halos and Shake-to-Find" />
+          <h3>6 Halos &amp; Shake-to-Find</h3>
+          <p>Glow, Ring, Pulse, Spotlight cutout, Crosshair, and rotating Target with Always / While Moving / When Still triggers plus Shake-to-Find radar rings.</p>
+        </article>
+        <article class="card">
+          <img src="assets/concept-cursor-forge.svg" alt="Custom Cursor Forge" />
+          <h3>Procedural Cursor Forge</h3>
+          <p>14 Arrows, 30 Surfaces, 22 Lines, 18 Ornaments, 5 Shadows, and animated 12-frame busy spinners — rasterized in pure Rust via <code>resvg</code> into native Windows <code>.cur</code> &amp; <code>.ani</code> files.</p>
+        </article>
+        <article id="architecture" class="card">
+          <img src="assets/concept-architecture.svg" alt="DirectComposition Architecture" />
+          <h3>Zero-Overhead Architecture</h3>
+          <p>Shared Direct3D11/Direct2D/DirectComposition device, <code>WS_EX_NOREDIRECTIONBITMAP</code>, fullscreen game auto-hide, and <code>IDXGIDevice3::Trim()</code> when idle.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="install" class="container section">
+      <div class="card install-card">
+        <h2>Quick Install &amp; CLI Control</h2>
+        <pre><code># Download &amp; launch standalone statically linked binary (no VC++ runtime needed)
+Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
+&amp; "$HOME\Downloads\winscroller-mouse.exe" settings
+
+# Script via local Named-Pipe IPC
+winscroller-mouse.exe look neon
+winscroller-mouse.exe cursor candy
+winscroller-mouse.exe find</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <p>Winscroller Mouse · Pure Rust Edition 2024 · MIT License · Ported from <a href="https://github.com/qempexe/omarchy-plume">omarchy-plume</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+[book]
+title = "Winscroller Mouse"
+description = "Native Windows 10/11 Custom Cursor Forge & GPU Pointer Effects written in Rust"
+authors = ["Winscroller Mouse contributors"]
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse"
+edit-url-template = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/edit/main/docs/{path}"
