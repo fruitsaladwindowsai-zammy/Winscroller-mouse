@@ -8,8 +8,8 @@
 ## Build Commands
 
 ```powershell
-git clone https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse.git
-cd Winscroller-Mouse
+git clone https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse.git
+cd Winscroller-mouse
 
 # Format, lint & test workspace
 cargo fmt -- --check

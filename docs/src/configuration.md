@@ -2,7 +2,7 @@
 
 Winscroller Mouse persists settings atomically to `%APPDATA%\WinscrollerMouse\settings.json`.
 
-See the complete key-by-key schema in the repository's [`CONFIGURATION.md`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/blob/main/CONFIGURATION.md) and the validated default template in [`winscroller-mouse.example.json`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/blob/main/winscroller-mouse.example.json).
+See the complete key-by-key schema in the repository's [`CONFIGURATION.md`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/blob/main/CONFIGURATION.md) and the validated default template in [`winscroller-mouse.example.json`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/blob/main/winscroller-mouse.example.json).
 
 ## Key Categories
 - **Trails**: `trail`, `trailLife`, `trailSize`, `trailStrength`

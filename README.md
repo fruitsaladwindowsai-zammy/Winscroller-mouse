@@ -9,16 +9,16 @@
 <p align="center">
   <img src="https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0f172a?style=flat-square&logo=windows&logoColor=00f5d4" alt="Platform: Windows 10 / 11" />
   <img src="https://img.shields.io/badge/rust-Edition%202024-f74c00?style=flat-square&logo=rust&logoColor=white" alt="Rust Edition 2024" />
-  <a href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/actions/workflows/ci.yml"><img src="https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/actions/workflows/ci.yml/badge.svg" alt="Windows CI" /></a>
-  <a href="https://fruitsaladwindowsai-zammy.github.io/Winscroller-Mouse/"><img src="https://img.shields.io/badge/docs-mdBook%20Manual-00f5d4?style=flat-square&logo=gitbook&logoColor=0f172a" alt="Documentation" /></a>
-  <a href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/latest"><img src="https://img.shields.io/badge/release-v1.0.0-7928ca?style=flat-square" alt="Release v1.0.0" /></a>
+  <a href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/actions/workflows/ci.yml"><img src="https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/actions/workflows/ci.yml/badge.svg" alt="Windows CI" /></a>
+  <a href="https://fruitsaladwindowsai-zammy.github.io/Winscroller-mouse/"><img src="https://img.shields.io/badge/docs-mdBook%20Manual-00f5d4?style=flat-square&logo=gitbook&logoColor=0f172a" alt="Documentation" /></a>
+  <a href="https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/latest"><img src="https://img.shields.io/badge/release-v1.0.0-7928ca?style=flat-square" alt="Release v1.0.0" /></a>
   <img src="https://img.shields.io/badge/license-MIT-10b981?style=flat-square" alt="License: MIT" />
   <img src="https://img.shields.io/badge/backend-DirectComposition%20%2B%20D2D1-0f172a?style=flat-square" alt="Backend: DirectComposition + D2D1" />
 </p>
 
 > 📖 **Official Documentation & Guides**:  
 > Read the complete guides, configuration reference, Cursor Forge manual, and architecture internals:  
-> [**fruitsaladwindowsai-zammy.github.io/Winscroller-Mouse**](https://fruitsaladwindowsai-zammy.github.io/Winscroller-Mouse/)
+> [**fruitsaladwindowsai-zammy.github.io/Winscroller-mouse**](https://fruitsaladwindowsai-zammy.github.io/Winscroller-mouse/)
 
 ```text
   ┌─────────────────── Winscroller Mouse GPU Pipeline ────────────────────┐
@@ -71,14 +71,14 @@
 ## Installation Guide (Step-by-Step)
 
 ### Option 1: Direct Download — Latest Prebuilt `.exe` (Fastest, Zero Build Tools)
-Every push to `main` automatically builds and publishes a standalone, statically linked `winscroller-mouse.exe` (`+crt-static`) on GitHub Releases:
+Every push to `master` (or `main`) automatically builds and publishes a standalone, statically linked `winscroller-mouse.exe` (`+crt-static`) on GitHub Releases:
 
-- **Direct EXE Download:** [**Download latest `winscroller-mouse.exe`**](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/download/latest/winscroller-mouse.exe)
-- **Full Bundle (.zip + docs + SHA256SUMS):** [**Latest Release Page**](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/tag/latest)
+- **Direct EXE Download:** [**Download latest `winscroller-mouse.exe`**](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/download/latest/winscroller-mouse.exe)
+- **Full Bundle (.zip + docs + SHA256SUMS):** [**Latest Release Page**](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/tag/latest)
 
 Or download and run directly via PowerShell:
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
+Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
 & "$HOME\Downloads\winscroller-mouse.exe" settings
 ```
 
@@ -100,8 +100,8 @@ winget install --id Microsoft.VisualStudio.2022.BuildTools --override "--quiet -
 
 #### Clone, Verify & Build
 ```powershell
-git clone https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse.git
-cd Winscroller-Mouse
+git clone https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse.git
+cd Winscroller-mouse
 
 # Run workspace tests & lints
 cargo fmt -- --check

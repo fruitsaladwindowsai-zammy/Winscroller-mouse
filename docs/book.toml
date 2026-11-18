@@ -11,5 +11,5 @@ build-dir = "book"
 [output.html]
 default-theme = "navy"
 preferred-dark-theme = "navy"
-git-repository-url = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse"
-edit-url-template = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/edit/main/docs/{path}"
+git-repository-url = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse"
+edit-url-template = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/edit/master/docs/{path}"

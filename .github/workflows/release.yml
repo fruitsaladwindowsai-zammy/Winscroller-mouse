@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
     tags:
       - 'v*'
   workflow_dispatch:
@@ -54,7 +55,7 @@ jobs:
             "$zipHash  winscroller-mouse-x86_64-pc-windows-msvc.zip"
           ) | Set-Content -Path SHA256SUMS.txt -Encoding ASCII
 
-      - name: Update rolling `latest` tag on main push
+      - name: Update rolling `latest` tag on branch push
         if: startsWith(github.ref, 'refs/heads/')
         shell: pwsh
         run: |
@@ -63,14 +64,14 @@ jobs:
           git tag -f latest HEAD
           git push origin refs/tags/latest --force
 
-      - name: Publish rolling `latest` Release (on push to main)
+      - name: Publish rolling `latest` Release (on push to main/master)
         if: startsWith(github.ref, 'refs/heads/')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           name: Winscroller Mouse — Latest Build
           body: |
-            Automated build published directly from commit `${{ github.sha }}` on `main`.
+            Automated build published directly from commit `${{ github.sha }}` on `${{ github.ref_name }}`.
 
             ### Quick Start (Zero Build Tools Required)
             1. Download **`winscroller-mouse.exe`** below (or the full `.zip` bundle).

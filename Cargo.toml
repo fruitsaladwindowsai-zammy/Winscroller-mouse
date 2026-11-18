@@ -10,8 +10,8 @@ version = "1.0.0"
 edition = "2024"
 license = "MIT"
 authors = ["Winscroller Mouse contributors"]
-repository = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse"
-homepage = "https://fruitsaladwindowsai-zammy.github.io/Winscroller-Mouse/"
+repository = "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse"
+homepage = "https://fruitsaladwindowsai-zammy.github.io/Winscroller-mouse/"
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }

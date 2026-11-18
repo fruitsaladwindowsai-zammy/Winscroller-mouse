@@ -2,10 +2,10 @@
 
 ## 1. Install or Build
 
-Download the latest standalone, statically linked `winscroller-mouse.exe` from [GitHub Releases](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/latest) — no VC++ redistributable or external runtimes are required.
+Download the latest standalone, statically linked `winscroller-mouse.exe` from [GitHub Releases](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/latest) — no VC++ redistributable or external runtimes are required.
 
 ```powershell
-Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
+Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
 & "$HOME\Downloads\winscroller-mouse.exe" settings
 ```
 

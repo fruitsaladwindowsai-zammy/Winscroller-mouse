@@ -11,4 +11,4 @@ cargo test --workspace
 cargo check --release --workspace --tests
 ```
 
-See the full guidelines in [`CONTRIBUTING.md`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-Mouse/blob/main/CONTRIBUTING.md).
+See the full guidelines in [`CONTRIBUTING.md`](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/blob/main/CONTRIBUTING.md).
