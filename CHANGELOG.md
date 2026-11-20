@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-20
+
+### Fixed
+- **Fullscreen Suppression False-Positive**: Resolved a critical issue where `is_fullscreen_active()` returned `true` for all maximized desktop windows (Chrome, Edge, File Explorer, VS Code) due to Windows' 8px off-screen border padding and `QUNS_BUSY` Focus Assist notification states. Restricted fullscreen game suppression strictly to exclusive Direct3D games (`QUNS_RUNNING_D3D_FULL_SCREEN`) and non-captioned borderless windows (`!IsZoomed(fg)` and no `WS_CAPTION`).
+- **DirectComposition Layered Alpha Initialization**: Added explicit `SetLayeredWindowAttributes(hwnd, COLORREF(0), 255, LWA_ALPHA)` and `SetWindowPos(HWND_TOPMOST)` on overlay window creation to ensure full opacity and immediate desktop visibility across all Windows 10/11 updates.
+
+### Changed
+- **Interactive Startup Experience**: Launching `winscroller-mouse.exe` directly (with no arguments or `settings`) immediately opens the 8-tab Settings Panel for instant visual feedback and live pointer customization.
+- **System Tray Notification**: Shows a balloon notification on daemon start informing the user that pointer trails and halos are active.
+- **Silent Background Execution**: Added `--silent` and `--daemon` CLI flags (configured in Windows startup registry `Run` key) to run quietly in the system tray without popping up the Settings window.
+
 ## [1.0.0] - 2026-11-18
 
 ### Added

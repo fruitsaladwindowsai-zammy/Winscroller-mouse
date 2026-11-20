@@ -126,6 +126,7 @@ cargo build --release -p winscroller-mouse
 ### Command Line (IPC to Running Instance)
 ```powershell
 winscroller-mouse.exe settings            # Open or focus the 8-tab Settings Panel
+winscroller-mouse.exe --silent            # Start quietly in system tray (also: --daemon)
 winscroller-mouse.exe toggle              # Toggle effects (also: on, off)
 winscroller-mouse.exe find                # Emit Find radar rings
 winscroller-mouse.exe look neon           # Apply a ready-made look (also: nextLook, undo)

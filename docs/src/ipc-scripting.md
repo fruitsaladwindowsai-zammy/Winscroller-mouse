@@ -3,6 +3,7 @@
 Winscroller Mouse exposes a local named pipe at `\\.\pipe\WinscrollerMouse`. Invoking `winscroller-mouse.exe` with arguments forwards the command to the running daemon in `< 5 ms`:
 
 ```powershell
+winscroller-mouse.exe --silent            # Start silently in background (also: --daemon)
 winscroller-mouse.exe toggle              # Toggle effects (also: on, off)
 winscroller-mouse.exe find                # Trigger Shake-to-Find burst
 winscroller-mouse.exe settings            # Open or focus the Settings Panel

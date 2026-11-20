@@ -2,11 +2,13 @@
 
 ## 1. Install or Build
 
-Download the latest standalone, statically linked `winscroller-mouse.exe` from [GitHub Releases](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/latest) — no VC++ redistributable or external runtimes are required.
+Download the latest standalone, statically linked `winscroller-mouse.exe` directly from the repository root or from [GitHub Releases](https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/latest) — no VC++ redistributable or external runtimes are required.
+
+Double-clicking `winscroller-mouse.exe` directly launches the interactive 8-tab Settings Panel and system tray icon.
 
 ```powershell
 Invoke-WebRequest -Uri "https://github.com/fruitsaladwindowsai-zammy/Winscroller-mouse/releases/download/latest/winscroller-mouse.exe" -OutFile "$HOME\Downloads\winscroller-mouse.exe"
-& "$HOME\Downloads\winscroller-mouse.exe" settings
+& "$HOME\Downloads\winscroller-mouse.exe"
 ```
 
 ## 2. System Tray Interactions

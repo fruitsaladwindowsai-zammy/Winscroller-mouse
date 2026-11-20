@@ -7,9 +7,14 @@ This guide covers everyday usage of **Winscroller Mouse**: system tray interacti
 ## 1. Launching & Single-Instance Behavior
 
 Double-click `winscroller-mouse.exe` (or run it from PowerShell):
-- On first launch, Winscroller Mouse starts silently in the **Windows system tray** with click-through DirectComposition overlays attached to every monitor.
-- If Winscroller Mouse is **already running**, launching `winscroller-mouse.exe` again automatically focuses or opens the **Settings Panel** instead of creating a duplicate process.
-- To launch directly into the Settings Panel:
+- **Interactive Launch**: Double-clicking `winscroller-mouse.exe` directly opens the **8-tab Settings Panel** with live interactive preview, allowing you to configure looks, trails, halos, and custom cursors right away. A friendly system tray notification informs you that pointer effects are active.
+- **Silent Background Run**: To start silently in the system tray without opening the Settings window (e.g., in automated scripts or startup runners):
+  ```powershell
+  winscroller-mouse.exe --silent
+  # or: winscroller-mouse.exe --daemon
+  ```
+- **Single-Instance Focus**: If Winscroller Mouse is **already running**, launching `winscroller-mouse.exe` again automatically focuses and brings the **Settings Panel** to the foreground instead of creating a duplicate process.
+- **Explicit Settings Command**:
   ```powershell
   winscroller-mouse.exe settings
   ```
@@ -58,6 +63,7 @@ Any command sent to `winscroller-mouse.exe` while the daemon is running is forwa
 ```powershell
 winscroller-mouse.exe --version           # Print version
 winscroller-mouse.exe --help              # Print CLI help
+winscroller-mouse.exe --silent            # Run silently in tray (also: --daemon)
 winscroller-mouse.exe toggle              # Toggle effects on/off (also: on, off)
 winscroller-mouse.exe find                # Trigger Shake-to-Find radar rings
 winscroller-mouse.exe settings            # Open or focus the Settings Panel

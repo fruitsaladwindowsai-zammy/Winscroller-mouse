@@ -1,6 +1,17 @@
-# Winscroller Mouse v1.0.0 — Release Notes
+# Winscroller Mouse v1.0.1 — Release Notes
 
 **Winscroller Mouse** is a native, GPU-accelerated Windows 10/11 clone of [omarchy-plume](https://github.com/qempexe/omarchy-plume) written in pure Rust — combining a full procedural **Custom Cursor Forge** with silky-smooth **DirectComposition pointer trails, halos, color modes, and Shake-to-Find**.
+
+---
+
+## What's New in v1.0.1
+
+### Fixes & Enhancements
+- **Fixed Fullscreen Auto-Hide False Positives**: Resolved an issue where maximized Windows applications (browsers, terminals, code editors) triggered fullscreen auto-hide due to Windows' 8-pixel off-screen border expansion and `QUNS_BUSY` Focus Assist notifications. Trails and halos now remain active over normal maximized windows and only auto-hide when exclusive Direct3D games are playing.
+- **DirectComposition Layered Surface Alpha**: Explicitly configured `SetLayeredWindowAttributes` (alpha 255) and `SetWindowPos(HWND_TOPMOST)` during overlay creation, guaranteeing per-pixel alpha rendering and topmost Z-order across all Windows 10 and 11 builds.
+- **Interactive First-Run Experience**: Double-clicking `winscroller-mouse.exe` directly launches the 8-tab Settings Panel with live interactive preview, allowing immediate configuration of looks, trails, halos, and custom cursors.
+- **Tray Balloon Notifications**: Shows a friendly Windows notification balloon when the daemon starts.
+- **Silent Daemon Flags**: Added `--silent` and `--daemon` for silent background execution and Windows startup registry integration.
 
 ---
 
