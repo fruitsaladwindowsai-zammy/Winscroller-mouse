@@ -58,7 +58,11 @@ jobs:
       - name: Update rolling `latest` tag on branch push
         if: startsWith(github.ref, 'refs/heads/')
         shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Clean up stale release so GitHub creates a fresh release with current timestamp
+          gh release delete latest --yes 2>$null
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git tag -f latest HEAD
@@ -69,14 +73,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: Winscroller Mouse — Latest Build
+          name: Winscroller Mouse v1.0.1 — Latest Build
           body: |
             Automated build published directly from commit `${{ github.sha }}` on `${{ github.ref_name }}`.
 
             ### Quick Start (Zero Build Tools Required)
             1. Download **`winscroller-mouse.exe`** below (or the full `.zip` bundle).
-            2. Double-click **`winscroller-mouse.exe`** — it starts silently in the system tray with zero external runtime dependencies (`+crt-static`).
-            3. Right-click the tray icon (or run `winscroller-mouse.exe settings`) to open the 8-tab live preview Settings Panel.
+            2. Double-click **`winscroller-mouse.exe`** — it opens the 8-tab Settings Panel with live interactive preview!
+            3. Right-click the tray icon to choose looks and presets.
           files: |
             winscroller-mouse.exe
             winscroller-mouse-x86_64-pc-windows-msvc.zip
