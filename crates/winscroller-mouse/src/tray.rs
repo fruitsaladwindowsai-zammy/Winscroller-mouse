@@ -201,6 +201,29 @@ pub unsafe fn update_tray_tip(hwnd: HWND, enabled: bool) {
     let _ = Shell_NotifyIconW(NIM_MODIFY, &nid);
 }
 
+/// Show a friendly balloon notification from the tray icon.
+pub unsafe fn show_tray_notification(hwnd: HWND, title: &str, info: &str) {
+    let mut nid = NOTIFYICONDATAW {
+        cbSize: std::mem::size_of::<NOTIFYICONDATAW>() as u32,
+        hWnd: hwnd,
+        uID: TRAY_ID,
+        uFlags: NIF_INFO,
+        dwInfoFlags: NIIF_INFO,
+        ..Default::default()
+    };
+    let title_u16: Vec<u16> = title.encode_utf16().chain(std::iter::once(0)).collect();
+    let len = title_u16.len().min(nid.szInfoTitle.len());
+    nid.szInfoTitle[..len].copy_from_slice(&title_u16[..len]);
+    nid.szInfoTitle[nid.szInfoTitle.len() - 1] = 0;
+
+    let info_u16: Vec<u16> = info.encode_utf16().chain(std::iter::once(0)).collect();
+    let len = info_u16.len().min(nid.szInfo.len());
+    nid.szInfo[..len].copy_from_slice(&info_u16[..len]);
+    nid.szInfo[nid.szInfo.len() - 1] = 0;
+
+    let _ = Shell_NotifyIconW(NIM_MODIFY, &nid);
+}
+
 fn set_tip(nid: &mut NOTIFYICONDATAW, text: &str) {
     let tip: Vec<u16> = text.encode_utf16().chain(std::iter::once(0)).collect();
     let len = tip.len().min(nid.szTip.len());

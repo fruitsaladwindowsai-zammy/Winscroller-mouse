@@ -103,14 +103,12 @@ pub fn read_windows_theme() -> ColorCtx {
     }
 }
 
-/// Detect whether a fullscreen application (game, video player, etc.) is currently active.
+/// Detect whether an exclusive/borderless fullscreen game or video player is currently active.
 pub fn is_fullscreen_active() -> bool {
     unsafe {
-        // Fast check via Windows Shell notification state
+        // Only trigger on explicit exclusive D3D fullscreen
         if let Ok(state) = SHQueryUserNotificationState()
-            && (state == QUNS_BUSY
-                || state == QUNS_RUNNING_D3D_FULL_SCREEN
-                || state == QUNS_PRESENTATION_MODE)
+            && state == QUNS_RUNNING_D3D_FULL_SCREEN
         {
             return true;
         }
@@ -119,6 +117,12 @@ pub fn is_fullscreen_active() -> bool {
         if fg.0.is_null() {
             return false;
         }
+
+        // Standard maximized desktop apps (e.g. browser, editor) are NOT fullscreen games
+        if IsZoomed(fg).as_bool() {
+            return false;
+        }
+
         // Ignore desktop / shell windows
         let mut cls = [0u16; 64];
         let len = GetClassNameW(fg, &mut cls) as usize;
@@ -136,6 +140,12 @@ pub fn is_fullscreen_active() -> bool {
             }
         }
 
+        // Windows with title bars / captions are normal desktop windows
+        let style = GetWindowLongW(fg, GWL_STYLE) as u32;
+        if (style & WS_CAPTION.0) == WS_CAPTION.0 {
+            return false;
+        }
+
         let mut win_rect = RECT::default();
         if GetWindowRect(fg, &mut win_rect).is_err() {
             return false;
@@ -151,7 +161,7 @@ pub fn is_fullscreen_active() -> bool {
         }
         let mr = mi.rcMonitor;
 
-        // Fullscreen if window covers entire monitor without caption/border or exact monitor bounds
+        // Borderless fullscreen if window completely covers the monitor and has no caption
         win_rect.left <= mr.left
             && win_rect.top <= mr.top
             && win_rect.right >= mr.right
@@ -197,7 +207,7 @@ pub fn set_start_with_windows(enable: bool) {
         }
         if enable {
             if let Ok(exe) = std::env::current_exe() {
-                let cmd = format!("\"{}\"", exe.display());
+                let cmd = format!("\"{}\" --silent", exe.display());
                 let wide: Vec<u16> = cmd.encode_utf16().chain(std::iter::once(0)).collect();
                 let bytes = std::slice::from_raw_parts(wide.as_ptr() as *const u8, wide.len() * 2);
                 let _ = RegSetValueExW(hkey, w!("WinscrollerMouse"), Some(0), REG_SZ, Some(bytes));
@@ -257,5 +267,21 @@ pub fn clipboard_get_text() -> Option<String> {
         })();
         let _ = CloseClipboard();
         res
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_theme_and_fullscreen_detection() {
+        let theme = read_windows_theme();
+        assert!(!theme.palette.is_empty());
+        let hz = primary_refresh_rate();
+        assert!(hz >= 30);
+        let fs = is_fullscreen_active();
+        // In standard cargo test environment, fullscreen game should not be falsely detected
+        assert!(!fs);
     }
 }

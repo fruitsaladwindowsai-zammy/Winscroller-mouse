@@ -45,7 +45,7 @@ use store::{app_data_dir, load_state, save_state};
 use tray::{
     CMD_CURSOR_BASE, CMD_FIND, CMD_LOOK_BASE, CMD_NEXT_LOOK, CMD_QUIT, CMD_RESET_CURSOR,
     CMD_SETTINGS, CMD_TOGGLE, CMD_UNDO, WM_TRAY_CALLBACK, create_tray, show_tray_menu,
-    update_tray_tip,
+    show_tray_notification, update_tray_tip,
 };
 use win_cursor::{apply_custom_cursors, hide_system_cursor, restore_system_cursors};
 use win_theme::{
@@ -103,8 +103,9 @@ fn print_help() {
          USAGE:\n\
            winscroller-mouse.exe [COMMAND]\n\n\
          COMMANDS:\n\
-           (none)              Start daemon in system tray (or open Settings if already running)\n\
+           (none)              Start daemon and open Settings Panel (or focus if running)\n\
            settings            Open or focus the 8-tab Settings Panel\n\
+           --silent | --daemon Run in background without opening Settings Panel\n\
            toggle | on | off   Toggle pointer effects on/off\n\
            find                Trigger Shake-to-Find radar rings\n\
            look <name>         Apply one of 12 ready-made looks (e.g., classic, neon, ember)\n\
@@ -298,9 +299,25 @@ fn main() {
     let mut fullscreen_suppressed = false;
     let mut running = true;
 
-    // If first launch or launched with `settings`, open Settings panel right away if requested
-    if args.first().map(|s| s.as_str()) == Some("settings") {
+    let is_daemon = args
+        .iter()
+        .any(|s| matches!(s.as_str(), "--silent" | "--daemon" | "daemon"));
+    let want_settings =
+        !is_daemon && (args.is_empty() || args.first().map(|s| s.as_str()) == Some("settings"));
+
+    // If double-clicked / started interactively or launched with `settings`, open Settings panel right away
+    if want_settings {
         settings_panel = unsafe { SettingsPanel::open(&gpu, instance).ok() };
+    }
+
+    if !is_daemon {
+        unsafe {
+            show_tray_notification(
+                tray.hwnd,
+                "Winscroller Mouse Active",
+                "Pointer trails & effects are active! Double-click tray icon to customize.",
+            );
+        }
     }
 
     // ---- Main Loop ----------------------------------------------------------

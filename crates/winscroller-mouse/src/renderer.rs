@@ -184,6 +184,17 @@ impl OverlayWindow {
             None,
         )?;
 
+        let _ = SetLayeredWindowAttributes(hwnd, COLORREF(0), 255, LWA_ALPHA);
+        let _ = SetWindowPos(
+            hwnd,
+            Some(HWND_TOPMOST),
+            x,
+            y,
+            w as i32,
+            h as i32,
+            SWP_SHOWWINDOW | SWP_NOACTIVATE,
+        );
+
         let sc_desc = DXGI_SWAP_CHAIN_DESC1 {
             Width: w,
             Height: h,
@@ -662,4 +673,65 @@ pub unsafe fn execute_draw_cmds(
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_overlay_creation_and_multiframe_render() {
+        unsafe {
+            let instance = windows::Win32::System::LibraryLoader::GetModuleHandleW(None)
+                .unwrap()
+                .into();
+
+            unsafe extern "system" fn test_wndproc(
+                hwnd: HWND,
+                msg: u32,
+                wp: WPARAM,
+                lp: LPARAM,
+            ) -> LRESULT {
+                DefWindowProcW(hwnd, msg, wp, lp)
+            }
+
+            let wc = WNDCLASSEXW {
+                cbSize: std::mem::size_of::<WNDCLASSEXW>() as u32,
+                lpszClassName: w!("WinscrollerMouse_TestOverlay"),
+                hInstance: instance,
+                lpfnWndProc: Some(test_wndproc),
+                ..Default::default()
+            };
+            let _ = RegisterClassExW(&wc);
+
+            let gpu = GpuContext::new().expect("Failed to initialize GPU context");
+            let mut ov = OverlayWindow::new(
+                &gpu,
+                0,
+                0,
+                200,
+                200,
+                instance,
+                w!("WinscrollerMouse_TestOverlay"),
+            )
+            .expect("Failed to create OverlayWindow");
+
+            let cmds = vec![DrawCmd::FillCircle {
+                cx: 100.0,
+                cy: 100.0,
+                r: 20.0,
+                color: [1.0, 0.0, 0.0, 1.0],
+            }];
+
+            for frame in 0..5 {
+                let res = ov.render(&gpu, &cmds, false);
+                assert!(
+                    res.is_ok(),
+                    "Render frame {} failed with {:?}",
+                    frame,
+                    res.err()
+                );
+            }
+        }
+    }
 }
